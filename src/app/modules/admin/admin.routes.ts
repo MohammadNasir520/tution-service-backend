@@ -16,7 +16,9 @@ router.get('/',
     AdminController.getAllFromDB);
 
 router.get('/:id', auth(ENUM_USER_ROLE.ADMIN), AdminController.getByIdFromDB);
-router.patch('/:id', auth(ENUM_USER_ROLE.ADMIN), AdminController.updateIntoDB);
+router.patch('/:id', auth(ENUM_USER_ROLE.SUPER_ADMIN),
+    validateRequest(AdminValidation.UpdateSchema),
+    AdminController.updateIntoDB);
 router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), AdminController.deleteFromDB);
 
 export const AdminRoutes = router;

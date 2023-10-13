@@ -13,15 +13,18 @@ const CreateAdminZodSchema = z.object({
     profileImg: z.string({ required_error: 'profileImg is required' }),
   }),
 });
-const UserSignInZodSchema = z.object({
+const UpdateSchema = z.object({
   body: z.object({
-    email: z.string({ required_error: 'phone number is required' }),
-
-    password: z.string({ required_error: 'password is required' }),
+    name: z.string().optional(),
+    email: z.string().optional(),
+    contactNo: z.string().optional(),
+    profileImg: z.string().optional(),
+    role: z.enum(['admin', 'user']).optional(),
+    password: z.string().optional(),
   }),
 });
 
 export const AdminValidation = {
   CreateAdminZodSchema,
-  UserSignInZodSchema,
+  UpdateSchema
 };
