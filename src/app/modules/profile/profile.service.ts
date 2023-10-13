@@ -15,7 +15,7 @@ const getByIdFromDB = async (
       email: true,
       role: true,
       contactNo: true,
-      address: true,
+
       profileImg: true,
     },
   });
