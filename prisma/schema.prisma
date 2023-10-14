@@ -58,6 +58,19 @@ model Review {
   @@map("reviews")
 }
 
+model Booking {
+  id        String        @id @default(uuid())
+  userId    String
+  serviceId String
+  status    BookingStatus @default(pending)
+  startDate DateTime
+  endDate   DateTime
+  startTime DateTime
+  endTime   DateTime
+
+  @@map("bookings")
+}
+
 enum UserRole {
   super_admin
   admin
@@ -75,4 +88,10 @@ enum ServiceCategory {
   SoftSkill
   TangibleSkill
   Religious
+}
+
+enum BookingStatus {
+  pending
+  accepted
+  rejected
 }

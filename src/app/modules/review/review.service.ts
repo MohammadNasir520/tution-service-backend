@@ -30,6 +30,7 @@ const getByIdFromDB = async (id: string): Promise<Partial<Review | null>> => {
 
   });
   return result;
+
 };
 
 const updateIntoDB = async (
