@@ -3,9 +3,9 @@ import { z } from 'zod';
 const UserSignUpZodSchema = z.object({
   body: z.object({
     name: z.string({ required_error: 'name is required' }),
-    email: z.string({ required_error: 'phone number is required' }),
-    role: z.enum(['super_admin', 'user', 'admin'], {
-      required_error: 'role is required and must be customer or buyer',
+    email: z.string({ required_error: 'email is required' }),
+    role: z.enum(['user'], {
+      required_error: 'role is required and must be user',
     }),
     password: z.string({ required_error: 'password is required' }),
     contactNo: z.string({ required_error: 'contactNo is required' }),
@@ -14,7 +14,7 @@ const UserSignUpZodSchema = z.object({
 });
 const UserSignInZodSchema = z.object({
   body: z.object({
-    email: z.string({ required_error: 'phone number is required' }),
+    email: z.string({ required_error: 'email is required' }),
 
     password: z.string({ required_error: 'password is required' }),
   }),

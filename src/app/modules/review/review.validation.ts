@@ -1,26 +1,24 @@
 import { z } from 'zod';
 
-const UserSignUpZodSchema = z.object({
+const CreateZodSchema = z.object({
   body: z.object({
-    name: z.string({ required_error: 'name is required' }),
-    email: z.string({ required_error: 'phone number is required' }),
-    role: z.enum(['super_admin', 'user', 'admin'], {
-      required_error: 'role is required and must be customer or buyer',
-    }),
-    password: z.string({ required_error: 'password is required' }),
-    contactNo: z.string({ required_error: 'contactNo is required' }),
-    profileImg: z.string({ required_error: 'profileImg is required' }),
+    userId: z.string({ required_error: 'userId is required' }),
+    serviceId: z.string({ required_error: 'serviceId is required' }),
+    rating: z.string({ required_error: 'rating is required' }),
+    reviewText: z.string({ required_error: 'reviewText is required' }),
+
   }),
 });
-const UserSignInZodSchema = z.object({
+const updateZodSchema = z.object({
   body: z.object({
-    email: z.string({ required_error: 'phone number is required' }),
-
-    password: z.string({ required_error: 'password is required' }),
+    userId: z.string({ required_error: 'userId is required' }).optional(),
+    serviceId: z.string({ required_error: 'serviceId is required' }).optional(),
+    rating: z.string({ required_error: 'rating is required' }).optional(),
+    reviewText: z.string({ required_error: 'reviewText is required' }).optional(),
   }),
 });
 
 export const userValidation = {
-  UserSignUpZodSchema,
-  UserSignInZodSchema,
+  CreateZodSchema,
+  updateZodSchema,
 };

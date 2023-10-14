@@ -2,25 +2,34 @@ import { Request, Response } from 'express';
 import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
-import { UserService } from './review.service';
+import { ReviewService } from './review.service';
 
-const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await UserService.getAllFromDB();
+const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReviewService.insertIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'Users fetched successfully',
+    message: 'Reviews created successfully',
+    data: result,
+  });
+});
+const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await ReviewService.getAllFromDB();
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Reviews fetched successfully',
     data: result,
   });
 });
 
 const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const result = await UserService.getByIdFromDB(id);
+  const result = await ReviewService.getByIdFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User fetched successfully',
+    message: 'Review fetched successfully',
     data: result,
   });
 });
@@ -29,27 +38,28 @@ const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const payload = req.body;
 
-  const result = await UserService.updateIntoDB(id, payload);
+  const result = await ReviewService.updateIntoDB(id, payload);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User updated successfully',
+    message: 'Review updated successfully',
     data: result,
   });
 });
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
 
-  const result = await UserService.deleteFromDB(id);
+  const result = await ReviewService.deleteFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
-    message: 'User deleted successfully',
+    message: 'Review deleted successfully',
     data: result,
   });
 });
 
-export const UserController = {
+export const ReviewController = {
+  insertIntoDB,
   getAllFromDB,
   getByIdFromDB,
   updateIntoDB,
