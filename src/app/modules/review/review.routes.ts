@@ -6,7 +6,7 @@ import { ReviewController } from './review.controller';
 const router = express.Router();
 
 router.post('/',
-    // auth(ENUM_USER_ROLE.USER),
+    auth(ENUM_USER_ROLE.USER),
     ReviewController.insertIntoDB);
 router.get('/',
     auth(ENUM_USER_ROLE.ADMIN,),

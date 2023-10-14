@@ -1,15 +1,16 @@
 import { Prisma, Service } from '@prisma/client';
+import { JwtPayload } from 'jsonwebtoken';
 import { paginationHelpers } from '../../../helpers/paginationHelper';
 import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
 
-const insertIntoDB = async (data: Service): Promise<Service> => {
+const insertIntoDB = async (authUser: JwtPayload, data: Service): Promise<Service> => {
+  const { userId } = authUser
+  data.adminId = userId
   const result = await prisma.service.create({
     data,
-    // include: {
-    //   category: true,
-    // },
+
   });
   return result;
 };

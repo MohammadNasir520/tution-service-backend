@@ -1,7 +1,13 @@
 import { Review } from '@prisma/client';
+import { JwtPayload } from 'jsonwebtoken';
 import prisma from '../../../shared/prisma';
 
-const insertIntoDB = async (data: Review): Promise<Review> => {
+const insertIntoDB = async (authUser: JwtPayload, data: Review): Promise<Review> => {
+  const { userId } = authUser
+  data.userId = userId
+
+
+
   const result = await prisma.review.create({
     data,
     include: {
