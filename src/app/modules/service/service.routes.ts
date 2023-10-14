@@ -1,14 +1,16 @@
 import express from 'express';
 import { ENUM_USER_ROLE } from '../../../enums/user';
 import auth from '../../middlewares/auth';
+import validateRequest from '../../middlewares/validateRequest';
 import { ServiceController } from './service.controller';
+import { ServiceValidation } from './service.validation';
 
 const router = express.Router();
 
 router.post(
   '/',
-  // auth(ENUM_USER_ROLE.ADMIN),
-  // validateRequest(ServiceValidation.createServiceZodSchema),
+  auth(ENUM_USER_ROLE.ADMIN),
+  validateRequest(ServiceValidation.createServiceZodSchema),
   ServiceController.insertIntoDB
 );
 router.get('/', ServiceController.getAllFromDB);

@@ -27,15 +27,17 @@ model User {
 }
 
 model Service {
-  id      String @id @default(uuid())
-  title   String
-  image   String
-  adminId String
-  admin   User   @relation(fields: [adminId], references: [id])
-
+  id          String          @id @default(uuid())
+  title       String
+  image       String
+  adminId     String
+  topic       String
+  admin       User            @relation(fields: [adminId], references: [id])
   price       Float
   description String
   rating      Int
+  status      ServiceStatus   @default(available)
+  category    ServiceCategory
 
   @@map("services")
 }
@@ -44,4 +46,17 @@ enum UserRole {
   super_admin
   admin
   user
+}
+
+enum ServiceStatus {
+  available
+  notAvailable
+  upcommin
+}
+
+enum ServiceCategory {
+  Academic
+  SoftSkill
+  TangibleSkill
+  Religious
 }
