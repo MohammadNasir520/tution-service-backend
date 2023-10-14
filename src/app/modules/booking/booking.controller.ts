@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { JwtPayload } from 'jsonwebtoken';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { BookingService } from './booking.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
+  const authUser = req.user as JwtPayload
+  const bookingData = req.body
+  bookingData.userId = authUser.userId
   const result = await BookingService.insertIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -14,7 +18,10 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await BookingService.getAllFromDB();
+
+  const authUser = req.user as JwtPayload
+  console.log(authUser)
+  const result = await BookingService.getAllFromDB(authUser);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

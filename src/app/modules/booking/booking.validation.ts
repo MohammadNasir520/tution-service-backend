@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 const CreateZodSchema = z.object({
   body: z.object({
-    userId: z.string({ required_error: 'userId is required' }),
+
     serviceId: z.string({ required_error: 'serviceId is required' }),
     rating: z.string({ required_error: 'rating is required' }),
     reviewText: z.string({ required_error: 'reviewText is required' }),
