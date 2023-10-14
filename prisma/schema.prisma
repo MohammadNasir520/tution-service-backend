@@ -23,6 +23,7 @@ model User {
   updatedAt DateTime  @updatedAt
   services  Service[]
   reviews   Review[]
+  bookings  Booking[]
 
   @@map("users")
 }
@@ -40,6 +41,7 @@ model Service {
   status      ServiceStatus   @default(available)
   category    ServiceCategory
   reviews     Review[]
+  bookings    Booking[]
 
   @@map("services")
 }
@@ -61,7 +63,9 @@ model Review {
 model Booking {
   id        String        @id @default(uuid())
   userId    String
+  user      User          @relation(fields: [userId], references: [id])
   serviceId String
+  service   Service       @relation(fields: [serviceId], references: [id])
   status    BookingStatus @default(pending)
   startDate DateTime
   endDate   DateTime
