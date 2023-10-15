@@ -14,8 +14,8 @@ router.post(
   FAQController.insertIntoDB
 );
 
-router.get('/', auth(ENUM_USER_ROLE.ADMIN), FAQController.getAllFromDB);
-router.get('/:id', auth(ENUM_USER_ROLE.ADMIN), FAQController.getByIdFromDB);
+router.get('/', FAQController.getAllFromDB);
+router.get('/:id', FAQController.getByIdFromDB);
 
 router.patch(
   '/:id',
