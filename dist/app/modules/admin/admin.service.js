@@ -25,16 +25,16 @@ const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     if (isExist) {
         throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'Admin already exist by the email');
     }
-    console.log(isExist);
+    data.role = 'admin';
     const result = yield prisma_1.default.user.create({
-        data,
+        data
     });
     return result;
 });
 const getAllFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.findMany({
         where: {
-            role: "admin"
+            role: 'admin'
         },
         select: {
             id: true,
@@ -42,8 +42,8 @@ const getAllFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
             email: true,
             role: true,
             contactNo: true,
-            profileImg: true,
-        },
+            profileImg: true
+        }
     });
     if (!result || result.length <= 0) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'admin not found');
@@ -53,7 +53,7 @@ const getAllFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
 const getByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.findUnique({
         where: {
-            id,
+            id
         },
         select: {
             id: true,
@@ -61,15 +61,15 @@ const getByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
             email: true,
             role: true,
             contactNo: true,
-            profileImg: true,
-        },
+            profileImg: true
+        }
     });
     return result;
 });
 const updateIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.update({
         where: {
-            id: id,
+            id: id
         },
         data: payload,
         select: {
@@ -78,16 +78,16 @@ const updateIntoDB = (id, payload) => __awaiter(void 0, void 0, void 0, function
             email: true,
             role: true,
             contactNo: true,
-            profileImg: true,
-        },
+            profileImg: true
+        }
     });
     return result;
 });
 const deleteFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.delete({
         where: {
-            id: id,
-        },
+            id: id
+        }
     });
     return result;
 });
@@ -96,5 +96,5 @@ exports.AdminService = {
     getAllFromDB,
     getByIdFromDB,
     updateIntoDB,
-    deleteFromDB,
+    deleteFromDB
 };

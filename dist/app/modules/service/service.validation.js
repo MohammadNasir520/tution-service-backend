@@ -9,10 +9,9 @@ const createServiceZodSchema = zod_1.z.object({
         description: zod_1.z.string({ required_error: 'description is required' }),
         image: zod_1.z.string({ required_error: 'image is required' }),
         category: zod_1.z.string({ required_error: 'category is required' }),
-        topic: zod_1.z.string({ required_error: 'topic is required' }),
-        status: zod_1.z.string({ required_error: 'status is required' }).optional(),
-    }),
+        status: zod_1.z.string({ required_error: 'status is required' }).optional()
+    })
 });
 exports.ServiceValidation = {
-    createServiceZodSchema,
+    createServiceZodSchema
 };

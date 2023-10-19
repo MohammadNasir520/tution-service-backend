@@ -8,14 +8,16 @@ const insertIntoDB = async (data: User): Promise<User> => {
     where: {
       email: data.email
     }
-  })
+  });
   if (isExist) {
-    throw new ApiError(httpStatus.BAD_REQUEST, 'Admin already exist by the email')
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'Admin already exist by the email'
+    );
   }
-
-  console.log(isExist)
+  data.role = 'admin';
   const result = await prisma.user.create({
-    data,
+    data
   });
   return result;
 };
@@ -23,7 +25,7 @@ const insertIntoDB = async (data: User): Promise<User> => {
 const getAllFromDB = async (): Promise<Partial<User>[]> => {
   const result = await prisma.user.findMany({
     where: {
-      role: "admin"
+      role: 'admin'
     },
     select: {
       id: true,
@@ -32,11 +34,11 @@ const getAllFromDB = async (): Promise<Partial<User>[]> => {
       role: true,
       contactNo: true,
 
-      profileImg: true,
-    },
+      profileImg: true
+    }
   });
   if (!result || result.length <= 0) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'admin not found')
+    throw new ApiError(httpStatus.NOT_FOUND, 'admin not found');
   }
   return result;
 };
@@ -44,7 +46,7 @@ const getAllFromDB = async (): Promise<Partial<User>[]> => {
 const getByIdFromDB = async (id: string): Promise<Partial<User | null>> => {
   const result = await prisma.user.findUnique({
     where: {
-      id,
+      id
     },
     select: {
       id: true,
@@ -53,8 +55,8 @@ const getByIdFromDB = async (id: string): Promise<Partial<User | null>> => {
       role: true,
       contactNo: true,
 
-      profileImg: true,
-    },
+      profileImg: true
+    }
   });
   return result;
 };
@@ -65,7 +67,7 @@ const updateIntoDB = async (
 ): Promise<Partial<User>> => {
   const result = await prisma.user.update({
     where: {
-      id: id,
+      id: id
     },
     data: payload,
     select: {
@@ -75,8 +77,8 @@ const updateIntoDB = async (
       role: true,
       contactNo: true,
 
-      profileImg: true,
-    },
+      profileImg: true
+    }
   });
   return result;
 };
@@ -84,8 +86,8 @@ const updateIntoDB = async (
 const deleteFromDB = async (id: string) => {
   const result = await prisma.user.delete({
     where: {
-      id: id,
-    },
+      id: id
+    }
   });
   return result;
 };
@@ -95,5 +97,5 @@ export const AdminService = {
   getAllFromDB,
   getByIdFromDB,
   updateIntoDB,
-  deleteFromDB,
+  deleteFromDB
 };

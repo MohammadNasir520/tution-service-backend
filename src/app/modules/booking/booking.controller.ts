@@ -6,9 +6,10 @@ import sendResponse from '../../../shared/sendResponse';
 import { BookingService } from './booking.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const authUser = req.user as JwtPayload
-  const bookingData = req.body
-  bookingData.userId = authUser.userId
+  const authUser = req?.user as JwtPayload;
+  console.log(authUser);
+  const bookingData = req.body;
+  bookingData.userId = authUser.userId;
   const result = await BookingService.insertIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -18,9 +19,8 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
-
-  const authUser = req.user as JwtPayload
-  console.log(authUser)
+  const authUser = req.user as JwtPayload;
+  console.log(authUser);
   const result = await BookingService.getAllFromDB(authUser);
   sendResponse(res, {
     statusCode: httpStatus.OK,

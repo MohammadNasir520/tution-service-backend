@@ -87,6 +87,9 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
     const whereConditions = andConditions.length > 0 ? { AND: andConditions } : {};
     const result = yield prisma_1.default.service.findMany({
         where: whereConditions,
+        include: {
+            bookings: true,
+        },
         skip,
         take: size,
         orderBy: options.sortBy && options.sortOrder

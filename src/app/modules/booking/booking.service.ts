@@ -6,44 +6,39 @@ import ApiError from '../../../errors/ApiError';
 import prisma from '../../../shared/prisma';
 
 const insertIntoDB = async (data: Booking): Promise<Booking> => {
-
   const result = await prisma.booking.create({
-    data,
-    include: {
-      user: true,
-      service: true,
-    }
+    data: data,
   });
   return result;
 };
 
-const getAllFromDB = async (authUser: JwtPayload): Promise<Partial<Booking>[]> => {
-  const { role, userId } = authUser
-  console.log("authId", authUser)
-  let result: Booking[] = []
+const getAllFromDB = async (
+  authUser: JwtPayload
+): Promise<Partial<Booking>[]> => {
+  const { role, userId } = authUser;
+  console.log('authId', authUser);
+  let result: Booking[] = [];
   if (role === ENUM_USER_ROLE.ADMIN || role === ENUM_USER_ROLE.SUPER_ADMIN) {
     result = await prisma.booking.findMany({
       include: {
         user: true,
         service: true,
-      }
+      },
     });
   } else {
     result = await prisma.booking.findMany({
-
       where: {
-        userId: userId
+        userId: userId,
       },
       include: {
         user: true,
         service: true,
-      }
+      },
     });
   }
 
-
   if (result.length <= 0) {
-    throw new ApiError(httpStatus.NOT_FOUND, "You don't have any booking")
+    throw new ApiError(httpStatus.NOT_FOUND, "You don't have any booking");
   }
   return result;
 };
@@ -53,10 +48,8 @@ const getByIdFromDB = async (id: string): Promise<Partial<Booking | null>> => {
     where: {
       id,
     },
-
   });
   return result;
-
 };
 
 const updateIntoDB = async (
@@ -68,7 +61,6 @@ const updateIntoDB = async (
       id: id,
     },
     data: payload,
-
   });
   return result;
 };

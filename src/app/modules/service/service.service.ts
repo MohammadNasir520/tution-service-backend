@@ -5,12 +5,14 @@ import { IGenericResponse } from '../../../interfaces/common';
 import { IPaginationOptions } from '../../../interfaces/pagination';
 import prisma from '../../../shared/prisma';
 
-const insertIntoDB = async (authUser: JwtPayload, data: Service): Promise<Service> => {
-  const { userId } = authUser
-  data.adminId = userId
+const insertIntoDB = async (
+  authUser: JwtPayload,
+  data: Service
+): Promise<Service> => {
+  const { userId } = authUser;
+  data.adminId = userId;
   const result = await prisma.service.create({
     data,
-
   });
   return result;
 };
@@ -75,21 +77,24 @@ const getAllFromDB = async (
     }
   }
 
-  const whereConditions: Prisma.ServiceWhereInput = andConditions.length > 0 ? { AND: andConditions } : {};
+  const whereConditions: Prisma.ServiceWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
 
   const result = await prisma.service.findMany({
     where: whereConditions,
-
+    include: {
+      bookings: true,
+    },
     skip,
     take: size,
     orderBy:
       options.sortBy && options.sortOrder
         ? {
-          [options.sortBy as string]: options.sortOrder,
-        }
+            [options.sortBy as string]: options.sortOrder,
+          }
         : {
-          id: 'desc',
-        },
+            id: 'desc',
+          },
   });
   const total = await prisma.service.count({
     where: whereConditions,
@@ -138,7 +143,7 @@ const deleteFromDB = async (id: string) => {
 const getAllFromDBByCategoryId = async (
   categoryId: string
 ): Promise<Service[]> => {
-  console.log(categoryId)
+  console.log(categoryId);
   const result = await prisma.service.findMany({
     // where: {
     //   categoryId: categoryId,

@@ -7,18 +7,19 @@ import sendResponse from '../../../shared/sendResponse';
 import { ServiceService } from './service.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const authUser = req.user as JwtPayload
+  const authUser = req.user as JwtPayload;
 
   const result = await ServiceService.insertIntoDB(authUser, req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service created successfully',
-    data: result,
+    data: result
   });
 });
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
+  console.log('req', req.query);
   const filters = pick(req.query, [
     'searchTerm',
 
@@ -26,6 +27,8 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     'category',
     'minPrice',
     'maxPrice',
+    'status',
+    'category'
   ]);
   const options = pick(req.query, ['size', 'page', 'sortBy', 'sortOrder']);
   const result = await ServiceService.getAllFromDB(filters, options);
@@ -33,7 +36,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Services fetched successfully',
-    data: result,
+    data: result
   });
 });
 
@@ -44,7 +47,7 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service fetched successfully',
-    data: result,
+    data: result
   });
 });
 
@@ -57,7 +60,7 @@ const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service updated successfully',
-    data: result,
+    data: result
   });
 });
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
@@ -68,7 +71,7 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service deleted successfully',
-    data: result,
+    data: result
   });
 });
 
@@ -82,7 +85,7 @@ const getAllFromDBByCategoryId = catchAsync(
       statusCode: httpStatus.OK,
       success: true,
       message: 'Services with associated category data fetched successfully',
-      data: result,
+      data: result
     });
   }
 );
@@ -93,5 +96,5 @@ export const ServiceController = {
   getByIdFromDB,
   updateIntoDB,
   deleteFromDB,
-  getAllFromDBByCategoryId,
+  getAllFromDBByCategoryId
 };

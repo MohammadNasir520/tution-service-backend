@@ -19,35 +19,31 @@ const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.booking.create({
-        data,
-        include: {
-            user: true,
-            service: true,
-        }
+        data: data,
     });
     return result;
 });
 const getAllFromDB = (authUser) => __awaiter(void 0, void 0, void 0, function* () {
     const { role, userId } = authUser;
-    console.log("authId", authUser);
+    console.log('authId', authUser);
     let result = [];
     if (role === user_1.ENUM_USER_ROLE.ADMIN || role === user_1.ENUM_USER_ROLE.SUPER_ADMIN) {
         result = yield prisma_1.default.booking.findMany({
             include: {
                 user: true,
                 service: true,
-            }
+            },
         });
     }
     else {
         result = yield prisma_1.default.booking.findMany({
             where: {
-                userId: userId
+                userId: userId,
             },
             include: {
                 user: true,
                 service: true,
-            }
+            },
         });
     }
     if (result.length <= 0) {

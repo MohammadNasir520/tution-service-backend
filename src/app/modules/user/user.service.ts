@@ -3,22 +3,24 @@ import prisma from '../../../shared/prisma';
 
 const insertIntoDB = async (data: User): Promise<User> => {
   const result = await prisma.user.create({
-    data,
+    data
   });
   return result;
 };
 
 const getAllFromDB = async (): Promise<Partial<User>[]> => {
   const result = await prisma.user.findMany({
+    where: {
+      role: 'user'
+    },
     select: {
       id: true,
       name: true,
       email: true,
       role: true,
       contactNo: true,
-
-      profileImg: true,
-    },
+      profileImg: true
+    }
   });
   return result;
 };
@@ -26,7 +28,7 @@ const getAllFromDB = async (): Promise<Partial<User>[]> => {
 const getByIdFromDB = async (id: string): Promise<Partial<User | null>> => {
   const result = await prisma.user.findUnique({
     where: {
-      id,
+      id
     },
     select: {
       id: true,
@@ -35,8 +37,8 @@ const getByIdFromDB = async (id: string): Promise<Partial<User | null>> => {
       role: true,
       contactNo: true,
 
-      profileImg: true,
-    },
+      profileImg: true
+    }
   });
   return result;
 };
@@ -47,7 +49,7 @@ const updateIntoDB = async (
 ): Promise<Partial<User>> => {
   const result = await prisma.user.update({
     where: {
-      id: id,
+      id: id
     },
     data: payload,
     select: {
@@ -57,8 +59,8 @@ const updateIntoDB = async (
       role: true,
       contactNo: true,
 
-      profileImg: true,
-    },
+      profileImg: true
+    }
   });
   return result;
 };
@@ -66,8 +68,8 @@ const updateIntoDB = async (
 const deleteFromDB = async (id: string) => {
   const result = await prisma.user.delete({
     where: {
-      id: id,
-    },
+      id: id
+    }
   });
   return result;
 };
@@ -77,5 +79,5 @@ export const UserService = {
   getAllFromDB,
   getByIdFromDB,
   updateIntoDB,
-  deleteFromDB,
+  deleteFromDB
 };

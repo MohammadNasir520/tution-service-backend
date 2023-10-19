@@ -18,7 +18,8 @@ const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const booking_service_1 = require("./booking.service");
 const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const authUser = req.user;
+    const authUser = req === null || req === void 0 ? void 0 : req.user;
+    console.log(authUser);
     const bookingData = req.body;
     bookingData.userId = authUser.userId;
     const result = yield booking_service_1.BookingService.insertIntoDB(req.body);

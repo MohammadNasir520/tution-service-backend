@@ -25,16 +25,19 @@ const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         statusCode: http_status_1.default.OK,
         success: true,
         message: 'Service created successfully',
-        data: result,
+        data: result
     });
 }));
 const getAllFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log('req', req.query);
     const filters = (0, pick_1.default)(req.query, [
         'searchTerm',
         'title',
         'category',
         'minPrice',
         'maxPrice',
+        'status',
+        'category'
     ]);
     const options = (0, pick_1.default)(req.query, ['size', 'page', 'sortBy', 'sortOrder']);
     const result = yield service_service_1.ServiceService.getAllFromDB(filters, options);
@@ -42,7 +45,7 @@ const getAllFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         statusCode: http_status_1.default.OK,
         success: true,
         message: 'Services fetched successfully',
-        data: result,
+        data: result
     });
 }));
 const getByIdFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -52,7 +55,7 @@ const getByIdFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, 
         statusCode: http_status_1.default.OK,
         success: true,
         message: 'Service fetched successfully',
-        data: result,
+        data: result
     });
 }));
 const updateIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -63,7 +66,7 @@ const updateIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         statusCode: http_status_1.default.OK,
         success: true,
         message: 'Service updated successfully',
-        data: result,
+        data: result
     });
 }));
 const deleteFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -73,7 +76,7 @@ const deleteFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
         statusCode: http_status_1.default.OK,
         success: true,
         message: 'Service deleted successfully',
-        data: result,
+        data: result
     });
 }));
 const getAllFromDBByCategoryId = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -84,7 +87,7 @@ const getAllFromDBByCategoryId = (0, catchAsync_1.default)((req, res) => __await
         statusCode: http_status_1.default.OK,
         success: true,
         message: 'Services with associated category data fetched successfully',
-        data: result,
+        data: result
     });
 }));
 exports.ServiceController = {
@@ -93,5 +96,5 @@ exports.ServiceController = {
     getByIdFromDB,
     updateIntoDB,
     deleteFromDB,
-    getAllFromDBByCategoryId,
+    getAllFromDBByCategoryId
 };

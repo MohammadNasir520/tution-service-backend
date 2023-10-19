@@ -20,7 +20,6 @@ model User {
   profileImg String
 
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   services Service[]
   reviews  Review[]
@@ -30,19 +29,18 @@ model User {
 }
 
 model Service {
-  id          String          @id @default(uuid())
+  id          String @id @default(uuid())
   title       String
   image       String
   adminId     String
-  topic       String
-  admin       User            @relation(fields: [adminId], references: [id])
+  admin       User   @relation(fields: [adminId], references: [id])
   price       Float
   description String
-  rating      Int
-  status      ServiceStatus   @default(available)
-  category    ServiceCategory
-  reviews     Review[]
-  bookings    Booking[]
+
+  status   ServiceStatus   @default(available)
+  category ServiceCategory
+  reviews  Review[]
+  bookings Booking[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -65,16 +63,17 @@ model Review {
 }
 
 model Booking {
-  id        String        @id @default(uuid())
-  userId    String
-  user      User          @relation(fields: [userId], references: [id])
-  serviceId String
-  service   Service       @relation(fields: [serviceId], references: [id])
-  status    BookingStatus @default(pending)
-  startDate DateTime
-  endDate   DateTime
-  startTime DateTime
-  endTime   DateTime
+  id            String        @id @default(uuid())
+  userId        String
+  user          User          @relation(fields: [userId], references: [id])
+  serviceId     String
+  service       Service       @relation(fields: [serviceId], references: [id])
+  status        BookingStatus @default(pending)
+  paymentStatus paymentStatus @default(unPaid)
+  // startDate DateTime
+  // endDate   DateTime
+  startTime     DateTime
+  endTime       DateTime
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -101,13 +100,17 @@ enum UserRole {
 enum ServiceStatus {
   available
   notAvailable
-  upcommin
+  upComing
+}
+
+enum paymentStatus {
+  paid
+  unPaid
 }
 
 enum ServiceCategory {
   Academic
   SoftSkill
-  TangibleSkill
   Religious
 }
 

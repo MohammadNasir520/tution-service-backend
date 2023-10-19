@@ -2,18 +2,20 @@ import { Review } from '@prisma/client';
 import { JwtPayload } from 'jsonwebtoken';
 import prisma from '../../../shared/prisma';
 
-const insertIntoDB = async (authUser: JwtPayload, data: Review): Promise<Review> => {
-  const { userId } = authUser
-  data.userId = userId
+const insertIntoDB = async (
+  authUser: JwtPayload,
+  data: Review
+): Promise<Review> => {
+  const { userId } = authUser;
+  data.userId = userId;
 
-
-
+  console.log(data);
   const result = await prisma.review.create({
     data,
-    include: {
-      user: true,
-      service: true,
-    }
+    // include: {
+    //   user: true,
+    //   service: true,
+    // }
   });
   return result;
 };
@@ -23,7 +25,7 @@ const getAllFromDB = async (): Promise<Partial<Review>[]> => {
     include: {
       user: true,
       service: true,
-    }
+    },
   });
   return result;
 };
@@ -33,10 +35,8 @@ const getByIdFromDB = async (id: string): Promise<Partial<Review | null>> => {
     where: {
       id,
     },
-
   });
   return result;
-
 };
 
 const updateIntoDB = async (
@@ -48,7 +48,6 @@ const updateIntoDB = async (
       id: id,
     },
     data: payload,
-
   });
   return result;
 };

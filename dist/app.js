@@ -19,7 +19,22 @@ const globalErrorHandler_1 = __importDefault(require("./app/middlewares/globalEr
 const routes_1 = __importDefault(require("./app/routes"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+// app.use((_req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', '*');
+//   res.header('Access-Control-Allow-Headers', '*');
+//   next();
+// });
+// cors bolck handle
+app.use((0, cors_1.default)({ origin: 'https://tuitionmedia.vercel.app', credentials: true }));
+// app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use((req, res, next) => {
+    // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+    res.setHeader('Access-Control-Allow-Origin', 'https://tuitionmedia.vercel.app');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    next();
+});
 app.use((0, cookie_parser_1.default)());
 //parser
 app.use(express_1.default.json());
