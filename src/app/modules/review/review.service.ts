@@ -12,10 +12,11 @@ const insertIntoDB = async (
   console.log(data);
   const result = await prisma.review.create({
     data,
+
     // include: {
     //   user: true,
     //   service: true,
-    // }
+    // },
   });
   return result;
 };
@@ -25,6 +26,9 @@ const getAllFromDB = async (): Promise<Partial<Review>[]> => {
     include: {
       user: true,
       service: true,
+    },
+    orderBy: {
+      createdAt: 'desc',
     },
   });
   return result;
