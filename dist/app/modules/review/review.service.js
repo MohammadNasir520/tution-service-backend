@@ -17,12 +17,13 @@ const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const insertIntoDB = (authUser, data) => __awaiter(void 0, void 0, void 0, function* () {
     const { userId } = authUser;
     data.userId = userId;
+    console.log(data);
     const result = yield prisma_1.default.review.create({
         data,
-        include: {
-            user: true,
-            service: true,
-        }
+        // include: {
+        //   user: true,
+        //   service: true,
+        // },
     });
     return result;
 });
@@ -31,7 +32,10 @@ const getAllFromDB = () => __awaiter(void 0, void 0, void 0, function* () {
         include: {
             user: true,
             service: true,
-        }
+        },
+        orderBy: {
+            createdAt: 'desc',
+        },
     });
     return result;
 });

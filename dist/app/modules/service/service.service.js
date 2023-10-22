@@ -117,6 +117,10 @@ const getByIdFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
         where: {
             id,
         },
+        include: {
+            bookings: true,
+            reviews: true,
+        },
     });
     return result;
 });
