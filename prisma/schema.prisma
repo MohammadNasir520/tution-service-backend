@@ -91,6 +91,17 @@ model FAQ {
   updatedAt DateTime @updatedAt
 }
 
+model LatestUpdate {
+  id String @id @default(uuid())
+
+  image String
+  title String
+  text  String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
 enum UserRole {
   super_admin
   admin
