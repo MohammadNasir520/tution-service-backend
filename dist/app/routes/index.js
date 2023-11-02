@@ -8,6 +8,7 @@ const auth_routes_1 = require("../modules/auth/auth.routes");
 const FAQ_routes_1 = require("../modules/FAQ/FAQ.routes");
 const admin_routes_1 = require("../modules/admin/admin.routes");
 const booking_routes_1 = require("../modules/booking/booking.routes");
+const LatestUpdate_routes_1 = require("../modules/latestUpdate/LatestUpdate.routes");
 const profile_routes_1 = require("../modules/profile/profile.routes");
 const review_routes_1 = require("../modules/review/review.routes");
 const service_routes_1 = require("../modules/service/service.routes");
@@ -46,6 +47,10 @@ const moduleRoutes = [
     {
         path: '/faqs',
         route: FAQ_routes_1.FAQRoutes,
+    },
+    {
+        path: '/latest-updates',
+        route: LatestUpdate_routes_1.LatestUpdateRoutes,
     },
 ];
 moduleRoutes.forEach(route => router.use(route.path, route.route));

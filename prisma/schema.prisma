@@ -24,6 +24,7 @@ model User {
   services Service[]
   reviews  Review[]
   bookings Booking[]
+  carts    Cart[]
 
   @@map("users")
 }
@@ -44,6 +45,7 @@ model Service {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  carts     Cart[]
 
   @@map("services")
 }
@@ -100,6 +102,21 @@ model LatestUpdate {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Cart {
+  id String @id @default(uuid())
+
+  serviceId String
+  service   Service @relation(fields: [serviceId], references: [id])
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cart")
 }
 
 enum UserRole {
