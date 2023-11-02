@@ -16,7 +16,8 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
-  const result = await CartService.getAllFromDB();
+  const authUser = req.user as JwtPayload;
+  const result = await CartService.getAllFromDB(authUser);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

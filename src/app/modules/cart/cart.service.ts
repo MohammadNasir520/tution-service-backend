@@ -13,6 +13,7 @@ const insertIntoDB = async (
   const isExist = await prisma.cart.findFirst({
     where: {
       userId: authUser.userId,
+      serviceId: data.serviceId,
     },
   });
   console.log('cartExist', isExist);
@@ -25,14 +26,30 @@ const insertIntoDB = async (
   return result;
 };
 
-const getAllFromDB = async (): Promise<Partial<Cart>[]> => {
-  const result = await prisma.cart.findMany({
-    include: {
-      user: true,
-      service: true,
-    },
-  });
-  return result;
+const getAllFromDB = async (
+  authUser: JwtPayload
+): Promise<Cart[] | undefined> => {
+  console.log('cart', authUser);
+  const userId = authUser.userId;
+
+  if (authUser?.role == 'admin' || authUser?.role == 'super_admin') {
+    return await prisma.cart.findMany({
+      include: {
+        user: true,
+        service: true,
+      },
+    });
+  } else if (authUser.role == 'user') {
+    return await prisma.cart.findMany({
+      where: {
+        userId: userId,
+      },
+      include: {
+        user: true,
+        service: true,
+      },
+    });
+  }
 };
 
 const getByIdFromDB = async (id: string): Promise<Partial<Cart | null>> => {
