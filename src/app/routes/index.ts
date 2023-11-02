@@ -4,6 +4,7 @@ import { AuthRoutes } from '../modules/auth/auth.routes';
 import { FAQRoutes } from '../modules/FAQ/FAQ.routes';
 import { AdminRoutes } from '../modules/admin/admin.routes';
 import { BookingRoutes } from '../modules/booking/booking.routes';
+import { LatestUpdateRoutes } from '../modules/latestUpdate/LatestUpdate.routes';
 import { ProfileRoutes } from '../modules/profile/profile.routes';
 import { ReviewRoutes } from '../modules/review/review.routes';
 import { ServiceRoutes } from '../modules/service/service.routes';
@@ -44,6 +45,10 @@ const moduleRoutes = [
   {
     path: '/faqs',
     route: FAQRoutes,
+  },
+  {
+    path: '/latest-updates',
+    route: LatestUpdateRoutes,
   },
 ];
 
