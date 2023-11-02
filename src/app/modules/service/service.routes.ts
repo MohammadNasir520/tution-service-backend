@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.post(
   '/',
-  auth(ENUM_USER_ROLE.ADMIN),
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   validateRequest(ServiceValidation.createServiceZodSchema),
   ServiceController.insertIntoDB
 );
@@ -17,7 +17,15 @@ router.get('/', ServiceController.getAllFromDB);
 
 router.get('/:categoryId/category', ServiceController.getAllFromDBByCategoryId);
 router.get('/:id', ServiceController.getByIdFromDB);
-router.patch('/:id', auth(ENUM_USER_ROLE.ADMIN), ServiceController.updateIntoDB);
-router.delete('/:id', auth(ENUM_USER_ROLE.ADMIN), ServiceController.deleteFromDB);
+router.patch(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  ServiceController.updateIntoDB
+);
+router.delete(
+  '/:id',
+  auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
+  ServiceController.deleteFromDB
+);
 
 export const ServiceRoutes = router;

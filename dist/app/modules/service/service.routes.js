@@ -11,10 +11,10 @@ const validateRequest_1 = __importDefault(require("../../middlewares/validateReq
 const service_controller_1 = require("./service.controller");
 const service_validation_1 = require("./service.validation");
 const router = express_1.default.Router();
-router.post('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(service_validation_1.ServiceValidation.createServiceZodSchema), service_controller_1.ServiceController.insertIntoDB);
+router.post('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), (0, validateRequest_1.default)(service_validation_1.ServiceValidation.createServiceZodSchema), service_controller_1.ServiceController.insertIntoDB);
 router.get('/', service_controller_1.ServiceController.getAllFromDB);
 router.get('/:categoryId/category', service_controller_1.ServiceController.getAllFromDBByCategoryId);
 router.get('/:id', service_controller_1.ServiceController.getByIdFromDB);
-router.patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), service_controller_1.ServiceController.updateIntoDB);
-router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN), service_controller_1.ServiceController.deleteFromDB);
+router.patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), service_controller_1.ServiceController.updateIntoDB);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.SUPER_ADMIN), service_controller_1.ServiceController.deleteFromDB);
 exports.ServiceRoutes = router;
