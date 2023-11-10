@@ -16,7 +16,6 @@ const insertIntoDB = async (data: User): Promise<Partial<User>> => {
 };
 
 const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
-  console.log('payload ', payload);
   const { email, password } = payload;
 
   const isUserExist = await prisma.user.findUnique({

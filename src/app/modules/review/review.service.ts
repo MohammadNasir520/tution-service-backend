@@ -9,7 +9,6 @@ const insertIntoDB = async (
   const { userId } = authUser;
   data.userId = userId;
 
-  console.log(data);
   const result = await prisma.review.create({
     data,
 

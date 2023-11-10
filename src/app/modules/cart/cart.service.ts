@@ -16,7 +16,7 @@ const insertIntoDB = async (
       serviceId: data.serviceId,
     },
   });
-  console.log('cartExist', isExist);
+
   if (isExist) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'already added to cart');
   }
@@ -29,7 +29,6 @@ const insertIntoDB = async (
 const getAllFromDB = async (
   authUser: JwtPayload
 ): Promise<Cart[] | undefined> => {
-  console.log('cart', authUser);
   const userId = authUser.userId;
 
   if (authUser?.role == 'admin' || authUser?.role == 'super_admin') {

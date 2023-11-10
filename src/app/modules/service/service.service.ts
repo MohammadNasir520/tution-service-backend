@@ -47,14 +47,6 @@ const getAllFromDB = async (
     });
   }
 
-  // if (category) {
-  //   andConditions.push({
-  //     categoryId: {
-  //       equals: category,
-  //     },
-  //   });
-  // }
-
   if (maxPrice !== undefined) {
     const maxPriceFloat = parseFloat(maxPrice);
     if (!isNaN(maxPriceFloat)) {
@@ -144,26 +136,10 @@ const deleteFromDB = async (id: string) => {
   return result;
 };
 
-const getAllFromDBByCategoryId = async (
-  categoryId: string
-): Promise<Service[]> => {
-  console.log(categoryId);
-  const result = await prisma.service.findMany({
-    // where: {
-    //   categoryId: categoryId,
-    // },
-    // include: {
-    //   category: true,
-    // },
-  });
-  return result;
-};
-
 export const ServiceService = {
   insertIntoDB,
   getAllFromDB,
   getByIdFromDB,
   updateIntoDB,
   deleteFromDB,
-  getAllFromDBByCategoryId,
 };

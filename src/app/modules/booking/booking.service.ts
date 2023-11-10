@@ -16,7 +16,7 @@ const getAllFromDB = async (
   authUser: JwtPayload
 ): Promise<Partial<Booking>[]> => {
   const { role, userId } = authUser;
-  console.log('authId', authUser);
+
   let result: Booking[] = [];
   if (role === ENUM_USER_ROLE.ADMIN || role === ENUM_USER_ROLE.SUPER_ADMIN) {
     result = await prisma.booking.findMany({

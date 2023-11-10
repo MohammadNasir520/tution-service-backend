@@ -14,12 +14,11 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service created successfully',
-    data: result
+    data: result,
   });
 });
 
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
-  console.log('req', req.query);
   const filters = pick(req.query, [
     'searchTerm',
 
@@ -28,7 +27,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     'minPrice',
     'maxPrice',
     'status',
-    'category'
+    'category',
   ]);
   const options = pick(req.query, ['size', 'page', 'sortBy', 'sortOrder']);
   const result = await ServiceService.getAllFromDB(filters, options);
@@ -36,7 +35,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Services fetched successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -47,7 +46,7 @@ const getByIdFromDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service fetched successfully',
-    data: result
+    data: result,
   });
 });
 
@@ -60,7 +59,7 @@ const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service updated successfully',
-    data: result
+    data: result,
   });
 });
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
@@ -71,21 +70,20 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Service deleted successfully',
-    data: result
+    data: result,
   });
 });
 
 const getAllFromDBByCategoryId = catchAsync(
   async (req: Request, res: Response) => {
     const categoryId = req.params.categoryId;
-    console.log('cid', categoryId);
 
     const result = await ServiceService.getAllFromDBByCategoryId(categoryId);
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: 'Services with associated category data fetched successfully',
-      data: result
+      data: result,
     });
   }
 );
@@ -96,5 +94,5 @@ export const ServiceController = {
   getByIdFromDB,
   updateIntoDB,
   deleteFromDB,
-  getAllFromDBByCategoryId
+  getAllFromDBByCategoryId,
 };

@@ -5,10 +5,9 @@ import ApiError from '../../../errors/ApiError';
 import prisma from '../../../shared/prisma';
 
 const getByIdFromDB = async (user: JwtPayload): Promise<Partial<User>> => {
-  console.log(user);
   const result = await prisma.user.findUnique({
     where: {
-      id: user.userId
+      id: user.userId,
     },
     select: {
       id: true,
@@ -17,8 +16,8 @@ const getByIdFromDB = async (user: JwtPayload): Promise<Partial<User>> => {
       role: true,
       contactNo: true,
 
-      profileImg: true
-    }
+      profileImg: true,
+    },
   });
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'your profile does not exist');
@@ -31,7 +30,7 @@ const updateByIdFromDB = async (
 ): Promise<Partial<User | null>> => {
   const result = await prisma.user.update({
     where: {
-      id: user.userId
+      id: user.userId,
     },
     data: data,
 
@@ -41,13 +40,13 @@ const updateByIdFromDB = async (
       email: true,
       role: true,
       contactNo: true,
-      profileImg: true
-    }
+      profileImg: true,
+    },
   });
   return result;
 };
 
 export const ProfileService = {
   getByIdFromDB,
-  updateByIdFromDB
+  updateByIdFromDB,
 };

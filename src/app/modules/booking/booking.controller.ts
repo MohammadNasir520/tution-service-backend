@@ -7,7 +7,7 @@ import { BookingService } from './booking.service';
 
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   const authUser = req?.user as JwtPayload;
-  console.log(authUser);
+
   const bookingData = req.body;
   bookingData.userId = authUser.userId;
   const result = await BookingService.insertIntoDB(req.body);
@@ -20,7 +20,7 @@ const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
 });
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const authUser = req.user as JwtPayload;
-  console.log(authUser);
+
   const result = await BookingService.getAllFromDB(authUser);
   sendResponse(res, {
     statusCode: httpStatus.OK,
