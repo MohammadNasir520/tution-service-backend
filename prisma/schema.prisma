@@ -19,12 +19,11 @@ model User {
   contactNo  String
   profileImg String
 
-  createdAt DateTime @default(now())
-
-  services Service[]
-  reviews  Review[]
-  bookings Booking[]
-  carts    Cart[]
+  services  Service[]
+  reviews   Review[]
+  bookings  Booking[]
+  carts     Cart[]
+  createdAt DateTime  @default(now())
 
   @@map("users")
 }
