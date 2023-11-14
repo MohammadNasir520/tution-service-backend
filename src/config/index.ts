@@ -17,5 +17,8 @@ export default {
     refresh_secret: process.env.JWT_REFRESH_SECRET,
     expires_in: process.env.JWT_EXPIRES_IN,
     refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
+    email_verification_expires_in: process.env.email_verification_expires_in,
   },
+  Email: process.env.Email,
+  GmailAppPassword: process.env.GmailAppPassword,
 };

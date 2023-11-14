@@ -74,25 +74,10 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getAllFromDBByCategoryId = catchAsync(
-  async (req: Request, res: Response) => {
-    const categoryId = req.params.categoryId;
-
-    const result = await ServiceService.getAllFromDBByCategoryId(categoryId);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: 'Services with associated category data fetched successfully',
-      data: result,
-    });
-  }
-);
-
 export const ServiceController = {
   insertIntoDB,
   getAllFromDB,
   getByIdFromDB,
   updateIntoDB,
   deleteFromDB,
-  getAllFromDBByCategoryId,
 };

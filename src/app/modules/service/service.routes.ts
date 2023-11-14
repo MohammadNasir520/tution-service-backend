@@ -15,7 +15,6 @@ router.post(
 );
 router.get('/', ServiceController.getAllFromDB);
 
-router.get('/:categoryId/category', ServiceController.getAllFromDBByCategoryId);
 router.get('/:id', ServiceController.getByIdFromDB);
 router.patch(
   '/:id',
@@ -27,5 +26,4 @@ router.delete(
   auth(ENUM_USER_ROLE.ADMIN, ENUM_USER_ROLE.SUPER_ADMIN),
   ServiceController.deleteFromDB
 );
-
 export const ServiceRoutes = router;

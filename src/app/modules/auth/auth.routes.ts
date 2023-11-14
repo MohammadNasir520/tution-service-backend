@@ -5,6 +5,16 @@ import { AuthController } from './auth.controller';
 
 const router = express.Router();
 router.post(
+  '/signup-send-verification-email',
+  validateRequest(userValidation.UserSignUpZodSchema),
+  AuthController.sendVerifyEmail
+);
+router.get(
+  '/crate-account',
+
+  AuthController.createAccount
+);
+router.post(
   '/signup',
   validateRequest(userValidation.UserSignUpZodSchema),
   AuthController.insertIntoDB
