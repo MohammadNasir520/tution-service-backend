@@ -26,7 +26,8 @@ const createAccount = catchAsync(async (req: Request, res: Response) => {
   //   message: 'User created successfully',
   //   data: result,
   // });
-  res.redirect('http://localhost:3000/login');
+  console.log(result);
+  res.redirect('http://localhost:3000/signup/verified');
 });
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
   const token = req?.query?.token;

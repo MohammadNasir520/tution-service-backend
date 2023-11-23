@@ -143,6 +143,8 @@ enum UserRole {
   super_admin
   admin
   user
+  tutor
+  parents
 }
 
 enum ServiceStatus {

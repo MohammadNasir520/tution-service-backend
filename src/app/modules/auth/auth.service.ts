@@ -17,7 +17,7 @@ const sendVerifyEmail = async (data: User) => {
 
   const subject = 'Verify Email For TuitionMedia';
   const from = process.env.Email;
-  const html = `<a href="http://localhost:5000/api/v1/auth/crate-account?token=${token}">Go to verification Page</a>`;
+  const html = `<a href="http://localhost:5000/api/v1/auth/crate-account?token=${token}">Verify email & Create Account</a>`;
   return sendEMail(from, data.email, subject, html);
 };
 const createAccount = async (token: any) => {
@@ -28,14 +28,17 @@ const createAccount = async (token: any) => {
   );
 
   // eslint-disable-next-line no-unused-vars
-  const { iat, exp, ...usersData } = decodedUsersData;
+  // const { iat, exp, ...usersData } = decodedUsersData;
 
-  console.log('decodeduserData', usersData);
-  // const result = await prisma.user.create({
-  //   data,
-  // });
+  const { name, email, password, contactNo, profileImg, role } =
+    decodedUsersData;
 
-  // return result;
+  // console.log('decodeduserData', usersData);
+  const result = await prisma.user.create({
+    data: { name, email, password, contactNo, profileImg, role },
+  });
+  console.log('creat account ', result);
+  return result;
 };
 
 const insertIntoDB = async (data: User, token: any): Promise<Partial<User>> => {
