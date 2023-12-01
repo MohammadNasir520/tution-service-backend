@@ -19,6 +19,7 @@ const getByIdFromDB = async (user: JwtPayload): Promise<Partial<User>> => {
       profileImg: true,
     },
   });
+  console.log(result);
   if (!result) {
     throw new ApiError(httpStatus.NOT_FOUND, 'your profile does not exist');
   }
