@@ -9,6 +9,12 @@ import { sendEMail } from '../../../utils/sendMail';
 import { ILoginUser, ILoginUserResponse } from './auth.interface';
 
 const sendVerifyEmail = async (data: User) => {
+  const isUserExist = await prisma.user.findFirst({
+    where: { email: data.email },
+  });
+  if (isUserExist?.id) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'user already exist');
+  }
   const token = jwtHelpers.createToken(
     data,
     config.jwt.secret as string,
@@ -26,12 +32,17 @@ const createAccount = async (token: any) => {
     config.jwt.secret as Secret
   );
 
-  // eslint-disable-next-line no-unused-vars
-  // const { iat, exp, ...usersData } = decodedUsersData;
-
   const { name, email, password, contactNo, profileImg, role } =
     decodedUsersData;
 
+  const isUserExist = await prisma.user.findFirst({ where: { email: email } });
+
+  if (isUserExist?.id) {
+    throw new ApiError(
+      httpStatus.BAD_REQUEST,
+      'user already created by clicking here'
+    );
+  }
   const result = await prisma.user.create({
     data: { name, email, password, contactNo, profileImg, role },
   });
