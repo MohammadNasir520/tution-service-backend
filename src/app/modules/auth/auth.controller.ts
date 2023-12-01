@@ -26,12 +26,11 @@ const createAccount = catchAsync(async (req: Request, res: Response) => {
   //   message: 'User created successfully',
   //   data: result,
   // });
-  console.log(result);
+
   res.redirect('http://localhost:3000/signup/verified');
 });
 const insertIntoDB = catchAsync(async (req: Request, res: Response) => {
-  const token = req?.query?.token;
-  const result = await AuthService.insertIntoDB(req.body, token);
+  const result = await AuthService.insertIntoDB(req.body);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,

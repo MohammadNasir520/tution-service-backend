@@ -21,7 +21,6 @@ const sendVerifyEmail = async (data: User) => {
   return sendEMail(from, data.email, subject, html);
 };
 const createAccount = async (token: any) => {
-  console.log('signup token', token);
   const decodedUsersData = jwtHelpers.verifyToken(
     token,
     config.jwt.secret as Secret
@@ -33,16 +32,14 @@ const createAccount = async (token: any) => {
   const { name, email, password, contactNo, profileImg, role } =
     decodedUsersData;
 
-  // console.log('decodeduserData', usersData);
   const result = await prisma.user.create({
     data: { name, email, password, contactNo, profileImg, role },
   });
-  console.log('creat account ', result);
+
   return result;
 };
 
-const insertIntoDB = async (data: User, token: any): Promise<Partial<User>> => {
-  console.log('signup token', token);
+const insertIntoDB = async (data: User): Promise<Partial<User>> => {
   const result = await prisma.user.create({
     data,
   });
