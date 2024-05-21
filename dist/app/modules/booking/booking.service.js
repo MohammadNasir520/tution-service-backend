@@ -25,7 +25,6 @@ const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const getAllFromDB = (authUser) => __awaiter(void 0, void 0, void 0, function* () {
     const { role, userId } = authUser;
-    console.log('authId', authUser);
     let result = [];
     if (role === user_1.ENUM_USER_ROLE.ADMIN || role === user_1.ENUM_USER_ROLE.SUPER_ADMIN) {
         result = yield prisma_1.default.booking.findMany({

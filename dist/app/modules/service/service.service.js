@@ -57,13 +57,6 @@ const getAllFromDB = (filters, options) => __awaiter(void 0, void 0, void 0, fun
             })),
         });
     }
-    // if (category) {
-    //   andConditions.push({
-    //     categoryId: {
-    //       equals: category,
-    //     },
-    //   });
-    // }
     if (maxPrice !== undefined) {
         const maxPriceFloat = parseFloat(maxPrice);
         if (!isNaN(maxPriceFloat)) {
@@ -141,23 +134,10 @@ const deleteFromDB = (id) => __awaiter(void 0, void 0, void 0, function* () {
     });
     return result;
 });
-const getAllFromDBByCategoryId = (categoryId) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(categoryId);
-    const result = yield prisma_1.default.service.findMany({
-    // where: {
-    //   categoryId: categoryId,
-    // },
-    // include: {
-    //   category: true,
-    // },
-    });
-    return result;
-});
 exports.ServiceService = {
     insertIntoDB,
     getAllFromDB,
     getByIdFromDB,
     updateIntoDB,
     deleteFromDB,
-    getAllFromDBByCategoryId,
 };

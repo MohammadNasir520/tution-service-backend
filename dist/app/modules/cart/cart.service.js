@@ -24,7 +24,6 @@ const insertIntoDB = (authUser, data) => __awaiter(void 0, void 0, void 0, funct
             serviceId: data.serviceId,
         },
     });
-    console.log('cartExist', isExist);
     if (isExist) {
         throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'already added to cart');
     }
@@ -34,7 +33,6 @@ const insertIntoDB = (authUser, data) => __awaiter(void 0, void 0, void 0, funct
     return result;
 });
 const getAllFromDB = (authUser) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('cart', authUser);
     const userId = authUser.userId;
     if ((authUser === null || authUser === void 0 ? void 0 : authUser.role) == 'admin' || (authUser === null || authUser === void 0 ? void 0 : authUser.role) == 'super_admin') {
         return yield prisma_1.default.cart.findMany({

@@ -18,6 +18,32 @@ const config_1 = __importDefault(require("../../../config"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const jwtHelpers_1 = require("../../../helpers/jwtHelpers");
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
+const sendMail_1 = require("../../../utils/sendMail");
+const sendVerifyEmail = (data) => __awaiter(void 0, void 0, void 0, function* () {
+    const isUserExist = yield prisma_1.default.user.findFirst({
+        where: { email: data.email },
+    });
+    if (isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.id) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'user already exist');
+    }
+    const token = jwtHelpers_1.jwtHelpers.createToken(data, config_1.default.jwt.secret, config_1.default.jwt.email_verification_expires_in);
+    const subject = 'Verify Email For TuitionMedia';
+    const from = process.env.Email;
+    const html = `<a href="http://localhost:5000/api/v1/auth/crate-account?token=${token}">Verify email & Create Account</a>`;
+    return (0, sendMail_1.sendEMail)(from, data.email, subject, html);
+});
+const createAccount = (token) => __awaiter(void 0, void 0, void 0, function* () {
+    const decodedUsersData = jwtHelpers_1.jwtHelpers.verifyToken(token, config_1.default.jwt.secret);
+    const { name, email, password, contactNo, profileImg, role } = decodedUsersData;
+    const isUserExist = yield prisma_1.default.user.findFirst({ where: { email: email } });
+    if (isUserExist === null || isUserExist === void 0 ? void 0 : isUserExist.id) {
+        throw new ApiError_1.default(http_status_1.default.BAD_REQUEST, 'user already created by clicking here');
+    }
+    const result = yield prisma_1.default.user.create({
+        data: { name, email, password, contactNo, profileImg, role },
+    });
+    return result;
+});
 const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.create({
         data,
@@ -25,7 +51,6 @@ const insertIntoDB = (data) => __awaiter(void 0, void 0, void 0, function* () {
     return result;
 });
 const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log('payload ', payload);
     const { email, password } = payload;
     const isUserExist = yield prisma_1.default.user.findUnique({
         where: {
@@ -51,4 +76,6 @@ const loginUser = (payload) => __awaiter(void 0, void 0, void 0, function* () {
 exports.AuthService = {
     insertIntoDB,
     loginUser,
+    sendVerifyEmail,
+    createAccount,
 };

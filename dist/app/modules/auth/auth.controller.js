@@ -29,6 +29,27 @@ const config_1 = __importDefault(require("../../../config"));
 const catchAsync_1 = __importDefault(require("../../../shared/catchAsync"));
 const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const auth_service_1 = require("./auth.service");
+const sendVerifyEmail = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield auth_service_1.AuthService.sendVerifyEmail(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'User created successfully',
+        data: result,
+    });
+}));
+const createAccount = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.query.token;
+    // eslint-disable-next-line no-unused-vars
+    const result = yield auth_service_1.AuthService.createAccount(token);
+    // sendResponse(res, {
+    //   statusCode: httpStatus.OK,
+    //   success: true,
+    //   message: 'User created successfully',
+    //   data: result,
+    // });
+    res.redirect('http://localhost:3000/signup/verified');
+}));
 const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield auth_service_1.AuthService.insertIntoDB(req.body);
     (0, sendResponse_1.default)(res, {
@@ -40,7 +61,6 @@ const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 }));
 const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const loginData = req.body;
-    console.log('logindeata', loginData);
     const result = yield auth_service_1.AuthService.loginUser(loginData);
     const { refreshToken } = result, others = __rest(result, ["refreshToken"]);
     // set refresh token into cookie
@@ -59,4 +79,6 @@ const loginUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void
 exports.AuthController = {
     insertIntoDB,
     loginUser,
+    sendVerifyEmail,
+    createAccount,
 };

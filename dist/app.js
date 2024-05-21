@@ -25,12 +25,21 @@ app.use((0, cors_1.default)({ origin: 'https://tuitionmedia.vercel.app', credent
 app.use((req, res, next) => {
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Origin', 'https://tuitionmedia.vercel.app');
+    // res.setHeader(
+    //   'Access-Control-Allow-Origin',
+    //   'https://tuitionmedia.vercel.app'
+    // );
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     next();
 });
 app.use((0, cookie_parser_1.default)());
+//ejs view engine
+app.set('view engine', 'ejs');
+app.get('/verifyEmailForm', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    res.render('hello');
+}));
 //parser
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));

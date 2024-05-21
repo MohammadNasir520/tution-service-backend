@@ -19,7 +19,6 @@ const sendResponse_1 = __importDefault(require("../../../shared/sendResponse"));
 const booking_service_1 = require("./booking.service");
 const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const authUser = req === null || req === void 0 ? void 0 : req.user;
-    console.log(authUser);
     const bookingData = req.body;
     bookingData.userId = authUser.userId;
     const result = yield booking_service_1.BookingService.insertIntoDB(req.body);
@@ -32,7 +31,6 @@ const insertIntoDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, v
 }));
 const getAllFromDB = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const authUser = req.user;
-    console.log(authUser);
     const result = yield booking_service_1.BookingService.getAllFromDB(authUser);
     (0, sendResponse_1.default)(res, {
         statusCode: http_status_1.default.OK,

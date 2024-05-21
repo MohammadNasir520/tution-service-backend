@@ -17,10 +17,9 @@ const http_status_1 = __importDefault(require("http-status"));
 const ApiError_1 = __importDefault(require("../../../errors/ApiError"));
 const prisma_1 = __importDefault(require("../../../shared/prisma"));
 const getByIdFromDB = (user) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(user);
     const result = yield prisma_1.default.user.findUnique({
         where: {
-            id: user.userId
+            id: user.userId,
         },
         select: {
             id: true,
@@ -28,8 +27,8 @@ const getByIdFromDB = (user) => __awaiter(void 0, void 0, void 0, function* () {
             email: true,
             role: true,
             contactNo: true,
-            profileImg: true
-        }
+            profileImg: true,
+        },
     });
     if (!result) {
         throw new ApiError_1.default(http_status_1.default.NOT_FOUND, 'your profile does not exist');
@@ -39,7 +38,7 @@ const getByIdFromDB = (user) => __awaiter(void 0, void 0, void 0, function* () {
 const updateByIdFromDB = (user, data) => __awaiter(void 0, void 0, void 0, function* () {
     const result = yield prisma_1.default.user.update({
         where: {
-            id: user.userId
+            id: user.userId,
         },
         data: data,
         select: {
@@ -48,12 +47,12 @@ const updateByIdFromDB = (user, data) => __awaiter(void 0, void 0, void 0, funct
             email: true,
             role: true,
             contactNo: true,
-            profileImg: true
-        }
+            profileImg: true,
+        },
     });
     return result;
 });
 exports.ProfileService = {
     getByIdFromDB,
-    updateByIdFromDB
+    updateByIdFromDB,
 };
