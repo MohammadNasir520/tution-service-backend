@@ -1,7 +1,9 @@
 import { TuitionPost } from '@prisma/client';
+import prisma from '../../../shared/prisma';
 
 const insertToDB = (data: TuitionPost) => {
-  console.log(data);
+  const result = prisma.tuitionPost.create({ data: data });
+  return result;
 };
 
 export const TuitionPostService = {
