@@ -9,6 +9,7 @@ import { LatestUpdateRoutes } from '../modules/latestUpdate/LatestUpdate.routes'
 import { ProfileRoutes } from '../modules/profile/profile.routes';
 import { ReviewRoutes } from '../modules/review/review.routes';
 import { ServiceRoutes } from '../modules/service/service.routes';
+import { TuitionPostRouter } from '../modules/tuitionPost/tuitionPost.routes';
 import { UserRoutes } from '../modules/user/user.routes';
 
 const router = express.Router();
@@ -54,6 +55,10 @@ const moduleRoutes = [
   {
     path: '/carts',
     route: CartRoutes,
+  },
+  {
+    path: '/tuition-posts',
+    route: TuitionPostRouter,
   },
 ];
 

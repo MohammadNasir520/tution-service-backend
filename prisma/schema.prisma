@@ -139,6 +139,29 @@ model Cart {
   @@map("cart")
 }
 
+model TuitionPost {
+  id                String        @unique @default(uuid())
+  medium            TuitionMedium
+  jobId             String
+  location          String
+  class             String
+  studentGender     Gender
+  days              Int
+  subject           String
+  tutoringStartTime DateTime
+  tutoringEndTime   DateTime
+  tutorGender       Gender
+  numberOfStudent   String
+  tuitionType       TuitionType
+  salary            Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tuitionPosts")
+}
+
+// Enums...................................
 enum UserRole {
   super_admin
   admin
@@ -168,4 +191,21 @@ enum BookingStatus {
   pending
   accepted
   rejected
+}
+
+enum TuitionMedium {
+  English
+  Bangla
+  Madrasha
+}
+
+enum Gender {
+  Male
+  Female
+  All
+}
+
+enum TuitionType {
+  Home
+  Online
 }
