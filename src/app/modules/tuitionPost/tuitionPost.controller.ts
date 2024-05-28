@@ -16,6 +16,29 @@ const insertToDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
+  const result = await TuitionPostService.getAllFromDB();
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'get all tuition Posts successful',
+    data: result,
+  });
+});
+
+const getSingleById = catchAsync(async (req: Request, res: Response) => {
+  const id = req.params.id;
+  const result = await TuitionPostService.getSingleById(id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    message: 'tuition post retrieved successfully',
+    data: result,
+    success: true,
+  });
+});
 export const TuitionPostController = {
   insertToDB,
+  getAllFromDB,
+  getSingleById,
 };

@@ -144,7 +144,7 @@ model TuitionPost {
   medium            TuitionMedium
   jobId             String
   location          String
-  class             String
+  className         String
   studentGender     Gender
   days              Int
   subject           String

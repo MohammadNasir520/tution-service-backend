@@ -3,8 +3,6 @@ import { JwtPayload } from 'jsonwebtoken';
 import prisma from '../../../shared/prisma';
 
 const insertIntoDB = async (authUser: JwtPayload, data: FAQ): Promise<FAQ> => {
-
-
   const result = await prisma.fAQ.create({
     data,
   });
@@ -12,9 +10,7 @@ const insertIntoDB = async (authUser: JwtPayload, data: FAQ): Promise<FAQ> => {
 };
 
 const getAllFromDB = async (): Promise<Partial<FAQ>[]> => {
-  const result = await prisma.fAQ.findMany({
-
-  });
+  const result = await prisma.fAQ.findMany({});
   return result;
 };
 
@@ -23,10 +19,8 @@ const getByIdFromDB = async (id: string): Promise<Partial<FAQ | null>> => {
     where: {
       id,
     },
-
   });
   return result;
-
 };
 
 const updateIntoDB = async (
@@ -38,7 +32,6 @@ const updateIntoDB = async (
       id: id,
     },
     data: payload,
-
   });
   return result;
 };
