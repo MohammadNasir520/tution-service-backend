@@ -4,6 +4,7 @@ import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { TuitionPostService } from './tuitionPost.service';
 
+// insert into db
 const insertToDB = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
   const result = await TuitionPostService.insertToDB(data);
@@ -16,6 +17,7 @@ const insertToDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get all from db
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const result = await TuitionPostService.getAllFromDB();
 
@@ -27,6 +29,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+// get single from db by id
 const getSingleById = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
   const result = await TuitionPostService.getSingleById(id);
@@ -37,8 +40,22 @@ const getSingleById = catchAsync(async (req: Request, res: Response) => {
     success: true,
   });
 });
+
+// update single by db
+const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
+  const data = req.body;
+  const id = req.params.id;
+  const result = await TuitionPostService.updatedIntoDB(data, id);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Tuition Post update successfully',
+    data: result,
+  });
+});
 export const TuitionPostController = {
   insertToDB,
   getAllFromDB,
   getSingleById,
+  updateIntoDB,
 };
