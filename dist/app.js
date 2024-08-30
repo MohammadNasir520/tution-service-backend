@@ -25,10 +25,6 @@ app.use((0, cors_1.default)({ origin: 'https://tuitionmedia.vercel.app', credent
 app.use((req, res, next) => {
     // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
     res.setHeader('Access-Control-Allow-Origin', 'https://tuitionmedia.vercel.app');
-    // res.setHeader(
-    //   'Access-Control-Allow-Origin',
-    //   'https://tuitionmedia.vercel.app'
-    // );
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Credentials', 'true');

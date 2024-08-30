@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "tuitionPosts" ALTER COLUMN "days" SET DATA TYPE TEXT,
+ALTER COLUMN "salary" SET DATA TYPE TEXT;

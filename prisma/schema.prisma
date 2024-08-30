@@ -20,13 +20,14 @@ model User {
   contactNo  String
   profileImg String
 
-  services  Service[]
-  reviews   Review[]
-  bookings  Booking[]
-  carts     Cart[]
-  createdAt DateTime  @default(now())
-  parents   Parents[]
-  tutors    Tutor[]
+  services    Service[]
+  reviews     Review[]
+  bookings    Booking[]
+  carts       Cart[]
+  createdAt   DateTime      @default(now())
+  parents     Parents[]
+  tutors      Tutor[]
+  TuitionPost TuitionPost[]
 
   @@map("users")
 }
@@ -146,17 +147,18 @@ model TuitionPost {
   location          String
   className         String
   studentGender     Gender
-  days              Int
+  days              String
   subject           String
-  tutoringStartTime DateTime
-  tutoringEndTime   DateTime
+  tutoringStartTime String
+  tutoringEndTime   String
   tutorGender       Gender
   numberOfStudent   String
   tuitionType       TuitionType
-  salary            Int
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  salary            String
+  postedBy          User          @relation(fields: [postedById], references: [id])
+  postedById        String
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
 
   @@map("tuitionPosts")
 }
@@ -202,7 +204,7 @@ enum TuitionMedium {
 enum Gender {
   Male
   Female
-  All
+  MaleOrFemale
 }
 
 enum TuitionType {

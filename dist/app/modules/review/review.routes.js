@@ -11,11 +11,11 @@ const validateRequest_1 = __importDefault(require("../../middlewares/validateReq
 const review_controller_1 = require("./review.controller");
 const review_validation_1 = require("./review.validation");
 const router = express_1.default.Router();
-router.post('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN), (0, validateRequest_1.default)(review_validation_1.ReviewValidation.CreateZodSchema), review_controller_1.ReviewController.insertIntoDB);
+router.post('/', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.parents), (0, validateRequest_1.default)(review_validation_1.ReviewValidation.CreateZodSchema), review_controller_1.ReviewController.insertIntoDB);
 router.get('/', 
-// auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.ADMIN),
+// auth(ENUM_USER_ROLE.USER, ENUM_USER_ROLE.ADMIN,ENUM_USER_ROLE.parents),
 review_controller_1.ReviewController.getAllFromDB);
-router.get('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN), review_controller_1.ReviewController.getByIdFromDB);
-router.patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN), review_controller_1.ReviewController.updateIntoDB);
-router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN), review_controller_1.ReviewController.deleteFromDB);
+router.get('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.parents), review_controller_1.ReviewController.getByIdFromDB);
+router.patch('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.parents), review_controller_1.ReviewController.updateIntoDB);
+router.delete('/:id', (0, auth_1.default)(user_1.ENUM_USER_ROLE.USER, user_1.ENUM_USER_ROLE.ADMIN, user_1.ENUM_USER_ROLE.parents), review_controller_1.ReviewController.deleteFromDB);
 exports.ReviewRoutes = router;

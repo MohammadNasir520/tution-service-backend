@@ -1,16 +1,15 @@
-import { Prisma, TuitionPost } from '@prisma/client';
+import { Prisma, User, UserRole } from '@prisma/client';
 import prisma from '../../../shared/prisma';
 
 // insert into Database
-const insertToDB = async (data: TuitionPost) => {
-  const result = await prisma.tuitionPost.create({ data: data });
+const insertToDB = async (data: User) => {
+  const result = await prisma.user.create({ data: data });
   return result;
 };
 
 // get all from Database
 const getAllFromDB = (filters: any) => {
   const { searchTerm, ...filterData } = filters;
-  console.log('fi', filterData);
   const andConditions = [];
 
   if (searchTerm) {
@@ -32,18 +31,29 @@ const getAllFromDB = (filters: any) => {
       })),
     });
   }
-
-  const whereConditions: Prisma.TuitionPostWhereInput =
+  andConditions.push({
+    role: UserRole.tutor,
+  });
+  const whereConditions: Prisma.UserWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
-  const result = prisma.tuitionPost.findMany({
+  const result = prisma.user.findMany({
     where: whereConditions,
+    select: {
+      name: true,
+      email: true,
+
+      role: true,
+      contactNo: true,
+      profileImg: true,
+      createdAt: true,
+    },
   });
   return result;
 };
 
 // get single from database
 const getSingleById = async (id: string) => {
-  const result = await prisma.tuitionPost.findUnique({
+  const result = await prisma.user.findUnique({
     where: {
       id: id,
     },
@@ -54,7 +64,7 @@ const getSingleById = async (id: string) => {
 
 // update
 const updatedIntoDB = async (data: any, id: string) => {
-  const result = await prisma.tuitionPost.update({
+  const result = await prisma.user.update({
     where: {
       id: id,
     },
@@ -65,7 +75,7 @@ const updatedIntoDB = async (data: any, id: string) => {
 
 // delete from DB
 const deleteFromDB = async (id: string) => {
-  const result = await prisma.tuitionPost.delete({
+  const result = await prisma.user.delete({
     where: {
       id: id,
     },
@@ -74,7 +84,7 @@ const deleteFromDB = async (id: string) => {
 };
 
 // export all function
-export const TuitionPostService = {
+export const UserService = {
   insertToDB,
   getAllFromDB,
   getSingleById,

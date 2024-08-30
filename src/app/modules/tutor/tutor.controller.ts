@@ -3,12 +3,12 @@ import httpStatus from 'http-status';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
-import { TuitionPostService } from './tuitionPost.service';
+import { UserService } from './tutor.service';
 
 // insert into db
 const insertToDB = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
-  const result = await TuitionPostService.insertToDB(data);
+  const result = await UserService.insertToDB(data);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -22,7 +22,7 @@ const insertToDB = catchAsync(async (req: Request, res: Response) => {
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
   const filters = pick(req.query, ['searchTerm', 'studentGender']);
   console.log(filters);
-  const result = await TuitionPostService.getAllFromDB(filters);
+  const result = await UserService.getAllFromDB(filters);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -35,7 +35,7 @@ const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
 // get single from db by id
 const getSingleById = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const result = await TuitionPostService.getSingleById(id);
+  const result = await UserService.getSingleById(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     message: 'tuition post retrieved successfully',
@@ -48,7 +48,7 @@ const getSingleById = catchAsync(async (req: Request, res: Response) => {
 const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
   const data = req.body;
   const id = req.params.id;
-  const result = await TuitionPostService.updatedIntoDB(data, id);
+  const result = await UserService.updatedIntoDB(data, id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -60,7 +60,7 @@ const updateIntoDB = catchAsync(async (req: Request, res: Response) => {
 // delete from db
 const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
   const id = req.params.id;
-  const result = await TuitionPostService.deleteFromDB(id);
+  const result = await UserService.deleteFromDB(id);
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
@@ -68,7 +68,7 @@ const deleteFromDB = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-export const TuitionPostController = {
+export const UserController = {
   insertToDB,
   getAllFromDB,
   getSingleById,
