@@ -1,16 +1,25 @@
 import { Prisma, TuitionPost } from '@prisma/client';
+import { JwtPayload } from 'jsonwebtoken';
+import { ENUM_USER_ROLE } from '../../../enums/user';
 import prisma from '../../../shared/prisma';
 
 // insert into Database
-const insertToDB = async (data: TuitionPost) => {
-  const result = await prisma.tuitionPost.create({ data: data });
+const insertToDB = async (data: TuitionPost, user: JwtPayload) => {
+  console.log('tuition user:', user);
+  data.postedById = user.userId;
+  const result = await prisma.tuitionPost.create({
+    data: data,
+    include: {
+      postedBy: true,
+    },
+  });
   return result;
 };
 
 // get all from Database
-const getAllFromDB = (filters: any) => {
+const getAllFromDB = (filters: any, user: JwtPayload) => {
   const { searchTerm, ...filterData } = filters;
-  console.log('fi', filterData);
+
   const andConditions = [];
 
   if (searchTerm) {
@@ -35,9 +44,17 @@ const getAllFromDB = (filters: any) => {
 
   const whereConditions: Prisma.TuitionPostWhereInput =
     andConditions.length > 0 ? { AND: andConditions } : {};
-  const result = prisma.tuitionPost.findMany({
-    where: whereConditions,
-  });
+  let result;
+  if (user?.role === ENUM_USER_ROLE.parents) {
+    result = prisma.tuitionPost.findMany({
+      where: {
+        postedById: user.userId,
+      },
+    });
+  } else
+    result = prisma.tuitionPost.findMany({
+      where: whereConditions,
+    });
   return result;
 };
 

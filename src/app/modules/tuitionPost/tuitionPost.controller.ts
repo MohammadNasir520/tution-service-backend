@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import httpStatus from 'http-status';
+import { JwtPayload } from 'jsonwebtoken';
 import catchAsync from '../../../shared/catchAsync';
 import pick from '../../../shared/pick';
 import sendResponse from '../../../shared/sendResponse';
@@ -7,8 +8,10 @@ import { TuitionPostService } from './tuitionPost.service';
 
 // insert into db
 const insertToDB = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user as JwtPayload;
+  console.log('created User', user);
   const data = req.body;
-  const result = await TuitionPostService.insertToDB(data);
+  const result = await TuitionPostService.insertToDB(data, user);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -20,9 +23,10 @@ const insertToDB = catchAsync(async (req: Request, res: Response) => {
 
 // get all from db
 const getAllFromDB = catchAsync(async (req: Request, res: Response) => {
+  const user = req.user as JwtPayload;
   const filters = pick(req.query, ['searchTerm', 'studentGender']);
-  console.log(filters);
-  const result = await TuitionPostService.getAllFromDB(filters);
+
+  const result = await TuitionPostService.getAllFromDB(filters, user);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
